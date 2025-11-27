@@ -13,8 +13,8 @@ export default function SplashScreen({ onNavigate }: SplashScreenProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       className="size-full flex flex-col items-center justify-center px-4"
-      style={{ 
-        background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)"
+      style={{
+        background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)",
       }}
     >
       {/* Decorative elements */}
@@ -37,19 +37,19 @@ export default function SplashScreen({ onNavigate }: SplashScreenProps) {
       >
         <ChiliCareLogo />
       </motion.div>
-      
+
       {/* App Name */}
       <motion.h1
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         className="text-center mb-3"
-        style={{ 
+        style={{
           fontFamily: "Georgia, serif",
           color: "#2C3E50",
           fontSize: "clamp(2rem, 6vw, 3rem)",
           fontWeight: "bold",
-          letterSpacing: "-0.02em"
+          letterSpacing: "-0.02em",
         }}
       >
         Chili Care
@@ -61,10 +61,10 @@ export default function SplashScreen({ onNavigate }: SplashScreenProps) {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.6 }}
         className="text-center mb-8 px-4"
-        style={{ 
+        style={{
           color: "#7F8C8D",
           fontSize: "clamp(1rem, 3vw, 1.25rem)",
-          fontStyle: "italic"
+          fontStyle: "italic",
         }}
       >
         Diagnosa Akurat, Cabai Lebih Sehat

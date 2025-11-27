@@ -29,10 +29,10 @@ const diseaseDatabase: Disease[] = [
     solutions: [
       "Gunakan benih tahan terhadap fusarium ",
       "Perbaiki drainase tanah (Buat bedengan tinggi dan saluran air yang lancar) ",
-      "Segera cabut dan musnahkan terinfeksi",
-      "Lakukan rotasi tanaman hindari tanam cabai terus-menerus",
-      "Sterilkan tanah atau gunakan Trichoderma",
-      "Perbaiki drainase tanah",
+      "Segera cabut dan musnahkan tanaman yang terinfeksi",
+      "Lakukan rotasi tanaman hindari tanam cabai di lahan yang sama secara berturut-turut setiap musim tanam",
+      "Sterilkan tanah atau gunakan Trichoderma (efektif melawan jamur tanah seperti Fusarium)",
+      "Jangan menyiram terlalu sering. Pastikan tanah tidak terlalu basah.",
     ],
     severity: "warning",
   },
@@ -52,10 +52,10 @@ const diseaseDatabase: Disease[] = [
     solutions: [
       "Hindari penyiraman berlebih",
       "Gunakan mulsa plastik untuk menjaga kelembapan tetap stabil",
-      "Semprot dengan pupuk kalsium",
-      "Lakukan drainase lahan",
+      "Semprot dengan pupuk kalsium untuk memperkuat jaringan batang sehingga tidak mudah busuk",
+      "Perbaiki drainase lahan agar area pangkal batang tidak lembap secara berlebihan",
       "Cabut tanaman yang busuk agar tidak menular",
-      "Perbaiki drainase tanah",
+      "Gunakan fungisida sistemik seperti metalaksil jika kondisi sangat parah",
     ],
     severity: "warning",
   },
@@ -68,15 +68,15 @@ const diseaseDatabase: Disease[] = [
       "Apakah tidak ada pengendalian hama?",
     ],
     solutions: [
-      "Pangkas daun bawah agar sirkulasi udara lancar",
+      "Pangkas daun bawah agar sirkulasi udara lancar sehingga daun cepat kering",
       "Jaga kebersihan lahan dari daun gugur",
-      "Gunakan fungisida kontak seperti mankozeb atau klorotalonil",
-      "Hindari jarak tanam terlalu rapat",
+      "Gunakan fungisida kontak seperti mankozeb atau klorotalonil untuk mencegah penyebaran bercak",
+      "Hindari jarak tanam terlalu rapat agar sirkulasi udara yang cukup sehingga kelembapan tidak tinggi.",
     ],
     severity: "info",
   },
   {
-    name: "Daun Kerdil (Virus)",
+    name: "Daun Kerdil (Virus vektor)",
     symptoms: [
       "Apakah daun keriting?",
       "Apakah daun menguning?",
@@ -87,10 +87,10 @@ const diseaseDatabase: Disease[] = [
     ],
     solutions: [
       "Kendalikan hama vektor dengan insektisida nabati atau perangkap kuning",
-      "Tanam varietas tahan virus",
+      "Tanam varietas tahan virus untuk meminimalkan risiko pada daerah yang sering terserang virus",
       "Cabut tanaman terinfeksi berat",
-      "Hindari jarak tanam terlalu rapat",
-      "Bersihkan di sekitar lahan gulma",
+      "Hindari jarak tanam terlalu rapat karena Virus mudah menular bila tanaman rapat",
+      "Bersihkan gulma sekitar lahan karena menjadi tempat berkembang biaknya vektor virus",
     ],
     severity: "warning",
   },
@@ -106,11 +106,11 @@ const diseaseDatabase: Disease[] = [
       "Apakah tanah terlalu lembab?",
     ],
     solutions: [
-      "Gunakan media tanam steril untuk persemaian",
-      "Jangan menyiram berlebihan",
-      "Tambahkan Trichoderma pada tanah",
-      "Jaga aerasi tanah tetap baik",
-      "Hindari menanam di lahan yang terlalu lembab",
+      "Gunakan media tanam steril untuk persemaian dan tidak mengandung spora jamur",
+      "Jangan menyiram berlebihan karena menyebabkan kecambah mudah roboh",
+      "Tambahkan Trichoderma pada tanah untuk membantu melindungi akar muda dari patogen tanah",
+      "Jaga aerasi tanah tetap baik, gunakan media yang gembur seperti campuran tanah + sekam bakar + kompos",
+      "Hindari menanam di lahan yang terlalu lembab karena benih dan bibit cabai sangat sensitif terhadap kelembapan tinggi",
     ],
     severity: "warning",
   },
@@ -125,9 +125,9 @@ const diseaseDatabase: Disease[] = [
       "Apakah buah mengkerut dan mengering?",
     ],
     solutions: [
-      "Panen buah segera setelah matang",
-      "Semprotkan fungisida preventif saat buah mulai muncul",
-      "Gunakan varietas tahan antraknosa",
+      "Panen buah segera setelah matang, bila terlalu lama di pohon lebih rentan terserang",
+      "Semprotkan fungisida preventif saat buah mulai muncul mengurangi risiko infeksi pada buah muda",
+      "Gunakan varietas tahan antraknosa terlebih di area yang sering hujan",
       "Jaga kebersihan lahan dan alat panen",
       "Hindari buah kontak langsung dengan tanah",
     ],
@@ -143,8 +143,8 @@ const diseaseDatabase: Disease[] = [
       "Apakah bunga dan buah rontok?",
     ],
     solutions: [
-      "Pengendalian dengan insektisida",
-      "Gunakan benih yang sehat",
+      "Gunakan insektisida yang efektif untuk kutu kebul atau perangkap kuning",
+      "Pastikan benih yang digunakan sehat",
       "Lakukan sanitasi lahan dari gulma",
       "Musnahkan segera tanaman yang terinfeksi",
     ],
@@ -159,16 +159,19 @@ const diseaseDatabase: Disease[] = [
       "Apakah akar membusuk?",
     ],
     solutions: [
-      "Aplikasikan agensia hayati seperti Pseudomonas fluorescens dan Bacillus subtilis",
-      "Lakukan penyemprotan bakterisida",
-      "Musnahkan tanaman terinfeksi",
-      "Lakukan penggiliran tanaman",
+      "Gunakan bakteri baik seperti Pseudomonas fluorescens dan Bacillus subtilis untuk menekan perkembangan bakteri patogen",
+      "Lakukan penyemprotan bakterisida khusus bakterial misalnya berbahan aktif streptomisin atau oksitetrasiklin",
+      "Musnahkan tanaman terinfeksi, jangan dibuang dekat lahan karena bakteri mudah menyebar melalui tanah dan air",
+      "Lakukan penggiliran tanaman, Jangan menanam cabai atau tanaman Solanaceae lain pada lahan yang sama",
     ],
     severity: "warning",
   },
 ];
 
-export default function ResultPage({ results, onNavigateBack }: ResultPageProps) {
+export default function ResultPage({
+  results,
+  onNavigateBack,
+}: ResultPageProps) {
   // Get "Yes" answers
   const getYesAnswers = () => {
     return Object.entries(results.answers)
@@ -195,9 +198,10 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
         disease,
         score,
         matchedSymptoms,
-        matchPercentage: disease.symptoms.length > 0
-          ? (score / disease.symptoms.length) * 100
-          : 0,
+        matchPercentage:
+          disease.symptoms.length > 0
+            ? (score / disease.symptoms.length) * 100
+            : 0,
       };
     });
   };
@@ -206,7 +210,8 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
   const getDiagnosis = () => {
     if (yesAnswers.length === 0) {
       return {
-        diagnosis: "Tidak ada gejala yang terdeteksi. Tanaman Anda tampak sehat!",
+        diagnosis:
+          "Tidak ada gejala yang terdeteksi. Tanaman Anda tampak sehat!",
         disease: null,
         score: 0,
         matchedSymptoms: [],
@@ -234,7 +239,9 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
       };
     }
 
-    const diagnosis = `Terdeteksi gejala penyakit ${topDisease.disease.name} yang disebabkan oleh ${getDiseaseDescription(topDisease.disease.name)}.`;
+    const diagnosis = `Terdeteksi gejala penyakit ${
+      topDisease.disease.name
+    } yang disebabkan oleh ${getDiseaseDescription(topDisease.disease.name)}.`;
 
     return {
       diagnosis,
@@ -250,10 +257,13 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
       "Layu Fusarium": "jamur atau bakteri",
       "Busuk Batang": "jamur phytophthora capsici",
       "Bercak Daun": "jamur cercospora capsici atau alternaria solani",
-      "Daun Kerdil (Virus)": "serangan virus yang ditularkan serangga kutu kebul atau aphid",
-      "Busuk Akar / Rebah Semai": "jamur tanah pythium sp. atau rhizoctonia sp.",
+      "Daun Kerdil (Virus)":
+        "serangan virus yang ditularkan serangga kutu kebul atau aphid",
+      "Busuk Akar / Rebah Semai":
+        "jamur tanah pythium sp. atau rhizoctonia sp.",
       "Antraknosa / Patek": "jamur colletotrichum capsici",
-      "Virus Kuning atau Gemini": "virus dari kelompok Begomovirus (seperti Pepper Yellow Leaf Curl Virus atau TYLCV)",
+      "Virus Kuning atau Gemini":
+        "virus dari kelompok Begomovirus (seperti Pepper Yellow Leaf Curl Virus atau TYLCV)",
       "Layu Bakteri": "bakteri Ralstonia solanacearum",
     };
     return descriptions[diseaseName] || "penyebab yang belum teridentifikasi";
@@ -261,7 +271,9 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
 
   const getSolution = () => {
     if (yesAnswers.length === 0) {
-      return ["Lanjutkan perawatan rutin tanaman Anda dengan penyiraman teratur dan pemupukan sesuai jadwal."];
+      return [
+        "Lanjutkan perawatan rutin tanaman Anda dengan penyiraman teratur dan pemupukan sesuai jadwal.",
+      ];
     }
 
     const diagnosisResult = getDiagnosis();
@@ -309,10 +321,15 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
       className="size-full flex flex-col"
-      style={{ background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)" }}
+      style={{
+        background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)",
+      }}
     >
       {/* Header */}
-      <div className="p-4 sm:p-6 text-center shadow-sm" style={{ backgroundColor: "#FFFFFF" }}>
+      <div
+        className="p-4 sm:p-6 text-center shadow-sm"
+        style={{ backgroundColor: "#FFFFFF" }}
+      >
         <h1
           style={{
             fontFamily: "Georgia, serif",
@@ -337,9 +354,7 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
           >
             {/* Icon and Title */}
             <div className="flex items-start gap-4 mb-4">
-              <div className="flex-shrink-0 mt-1">
-                {getSeverityIcon()}
-              </div>
+              <div className="flex-shrink-0 mt-1">{getSeverityIcon()}</div>
               <div className="flex-1">
                 <h2
                   className="mb-3"
