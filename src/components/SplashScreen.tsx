@@ -8,15 +8,15 @@ interface SplashScreenProps {
 
 export default function SplashScreen({ onNavigate }: SplashScreenProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="size-full flex flex-col items-center justify-center px-4"
-      style={{
-        background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)",
-      }}
-    >
+  <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 0.8 }}
+  className="min-h-screen flex flex-col items-center justify-center px-6 py-10 gap-8 relative"
+  style={{
+    background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)",
+  }}
+>
       {/* Decorative elements */}
       <div className="absolute top-10 left-10 opacity-20">
         <Leaf size={40} color="#27AE60" />

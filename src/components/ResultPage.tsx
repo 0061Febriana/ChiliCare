@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { DiagnosisResults } from "./DiagnosisPage";
-import { Home, AlertTriangle, Info, CheckCircle2 } from "lucide-react";
+import { Home, AlertTriangle, Info, CheckCircle2, Download } from "lucide-react";
+import jsPDF from "jspdf";
 
 interface ResultPageProps {
   results: DiagnosisResults;
@@ -29,10 +30,10 @@ const diseaseDatabase: Disease[] = [
     solutions: [
       "Gunakan benih tahan terhadap fusarium ",
       "Perbaiki drainase tanah (Buat bedengan tinggi dan saluran air yang lancar) ",
-      "Segera cabut dan musnahkan tanaman yang terinfeksi",
-      "Lakukan rotasi tanaman hindari tanam cabai di lahan yang sama secara berturut-turut setiap musim tanam",
-      "Sterilkan tanah atau gunakan Trichoderma (efektif melawan jamur tanah seperti Fusarium)",
-      "Jangan menyiram terlalu sering. Pastikan tanah tidak terlalu basah.",
+      "Segera cabut dan musnahkan terinfeksi",
+      "Lakukan rotasi tanaman hindari tanam cabai terus-menerus",
+      "Sterilkan tanah atau gunakan Trichoderma",
+      "Perbaiki drainase tanah",
     ],
     severity: "warning",
   },
@@ -52,10 +53,10 @@ const diseaseDatabase: Disease[] = [
     solutions: [
       "Hindari penyiraman berlebih",
       "Gunakan mulsa plastik untuk menjaga kelembapan tetap stabil",
-      "Semprot dengan pupuk kalsium untuk memperkuat jaringan batang sehingga tidak mudah busuk",
-      "Perbaiki drainase lahan agar area pangkal batang tidak lembap secara berlebihan",
+      "Semprot dengan pupuk kalsium",
+      "Lakukan drainase lahan",
       "Cabut tanaman yang busuk agar tidak menular",
-      "Gunakan fungisida sistemik seperti metalaksil jika kondisi sangat parah",
+      "Perbaiki drainase tanah",
     ],
     severity: "warning",
   },
@@ -68,15 +69,15 @@ const diseaseDatabase: Disease[] = [
       "Apakah tidak ada pengendalian hama?",
     ],
     solutions: [
-      "Pangkas daun bawah agar sirkulasi udara lancar sehingga daun cepat kering",
+      "Pangkas daun bawah agar sirkulasi udara lancar",
       "Jaga kebersihan lahan dari daun gugur",
-      "Gunakan fungisida kontak seperti mankozeb atau klorotalonil untuk mencegah penyebaran bercak",
-      "Hindari jarak tanam terlalu rapat agar sirkulasi udara yang cukup sehingga kelembapan tidak tinggi.",
+      "Gunakan fungisida kontak seperti mankozeb atau klorotalonil",
+      "Hindari jarak tanam terlalu rapat",
     ],
     severity: "info",
   },
   {
-    name: "Daun Kerdil (Virus vektor)",
+    name: "Daun Kerdil (Virus)",
     symptoms: [
       "Apakah daun keriting?",
       "Apakah daun menguning?",
@@ -87,10 +88,10 @@ const diseaseDatabase: Disease[] = [
     ],
     solutions: [
       "Kendalikan hama vektor dengan insektisida nabati atau perangkap kuning",
-      "Tanam varietas tahan virus untuk meminimalkan risiko pada daerah yang sering terserang virus",
+      "Tanam varietas tahan virus",
       "Cabut tanaman terinfeksi berat",
-      "Hindari jarak tanam terlalu rapat karena Virus mudah menular bila tanaman rapat",
-      "Bersihkan gulma sekitar lahan karena menjadi tempat berkembang biaknya vektor virus",
+      "Hindari jarak tanam terlalu rapat",
+      "Bersihkan di sekitar lahan gulma",
     ],
     severity: "warning",
   },
@@ -106,11 +107,11 @@ const diseaseDatabase: Disease[] = [
       "Apakah tanah terlalu lembab?",
     ],
     solutions: [
-      "Gunakan media tanam steril untuk persemaian dan tidak mengandung spora jamur",
-      "Jangan menyiram berlebihan karena menyebabkan kecambah mudah roboh",
-      "Tambahkan Trichoderma pada tanah untuk membantu melindungi akar muda dari patogen tanah",
-      "Jaga aerasi tanah tetap baik, gunakan media yang gembur seperti campuran tanah + sekam bakar + kompos",
-      "Hindari menanam di lahan yang terlalu lembab karena benih dan bibit cabai sangat sensitif terhadap kelembapan tinggi",
+      "Gunakan media tanam steril untuk persemaian",
+      "Jangan menyiram berlebihan",
+      "Tambahkan Trichoderma pada tanah",
+      "Jaga aerasi tanah tetap baik",
+      "Hindari menanam di lahan yang terlalu lembab",
     ],
     severity: "warning",
   },
@@ -125,9 +126,9 @@ const diseaseDatabase: Disease[] = [
       "Apakah buah mengkerut dan mengering?",
     ],
     solutions: [
-      "Panen buah segera setelah matang, bila terlalu lama di pohon lebih rentan terserang",
-      "Semprotkan fungisida preventif saat buah mulai muncul mengurangi risiko infeksi pada buah muda",
-      "Gunakan varietas tahan antraknosa terlebih di area yang sering hujan",
+      "Panen buah segera setelah matang",
+      "Semprotkan fungisida preventif saat buah mulai muncul",
+      "Gunakan varietas tahan antraknosa",
       "Jaga kebersihan lahan dan alat panen",
       "Hindari buah kontak langsung dengan tanah",
     ],
@@ -143,8 +144,8 @@ const diseaseDatabase: Disease[] = [
       "Apakah bunga dan buah rontok?",
     ],
     solutions: [
-      "Gunakan insektisida yang efektif untuk kutu kebul atau perangkap kuning",
-      "Pastikan benih yang digunakan sehat",
+      "Pengendalian dengan insektisida",
+      "Gunakan benih yang sehat",
       "Lakukan sanitasi lahan dari gulma",
       "Musnahkan segera tanaman yang terinfeksi",
     ],
@@ -159,19 +160,16 @@ const diseaseDatabase: Disease[] = [
       "Apakah akar membusuk?",
     ],
     solutions: [
-      "Gunakan bakteri baik seperti Pseudomonas fluorescens dan Bacillus subtilis untuk menekan perkembangan bakteri patogen",
-      "Lakukan penyemprotan bakterisida khusus bakterial misalnya berbahan aktif streptomisin atau oksitetrasiklin",
-      "Musnahkan tanaman terinfeksi, jangan dibuang dekat lahan karena bakteri mudah menyebar melalui tanah dan air",
-      "Lakukan penggiliran tanaman, Jangan menanam cabai atau tanaman Solanaceae lain pada lahan yang sama",
+      "Aplikasikan agensia hayati seperti Pseudomonas fluorescens dan Bacillus subtilis",
+      "Lakukan penyemprotan bakterisida",
+      "Musnahkan tanaman terinfeksi",
+      "Lakukan penggiliran tanaman",
     ],
     severity: "warning",
   },
 ];
 
-export default function ResultPage({
-  results,
-  onNavigateBack,
-}: ResultPageProps) {
+export default function ResultPage({ results, onNavigateBack }: ResultPageProps) {
   // Get "Yes" answers
   const getYesAnswers = () => {
     return Object.entries(results.answers)
@@ -198,10 +196,9 @@ export default function ResultPage({
         disease,
         score,
         matchedSymptoms,
-        matchPercentage:
-          disease.symptoms.length > 0
-            ? (score / disease.symptoms.length) * 100
-            : 0,
+        matchPercentage: disease.symptoms.length > 0
+          ? (score / disease.symptoms.length) * 100
+          : 0,
       };
     });
   };
@@ -210,8 +207,7 @@ export default function ResultPage({
   const getDiagnosis = () => {
     if (yesAnswers.length === 0) {
       return {
-        diagnosis:
-          "Tidak ada gejala yang terdeteksi. Tanaman Anda tampak sehat!",
+        diagnosis: "Tidak ada gejala yang terdeteksi. Tanaman Anda tampak sehat!",
         disease: null,
         score: 0,
         matchedSymptoms: [],
@@ -239,9 +235,7 @@ export default function ResultPage({
       };
     }
 
-    const diagnosis = `Terdeteksi gejala penyakit ${
-      topDisease.disease.name
-    } yang disebabkan oleh ${getDiseaseDescription(topDisease.disease.name)}.`;
+    const diagnosis = `Terdeteksi gejala penyakit ${topDisease.disease.name} yang disebabkan oleh ${getDiseaseDescription(topDisease.disease.name)}.`;
 
     return {
       diagnosis,
@@ -257,13 +251,10 @@ export default function ResultPage({
       "Layu Fusarium": "jamur atau bakteri",
       "Busuk Batang": "jamur phytophthora capsici",
       "Bercak Daun": "jamur cercospora capsici atau alternaria solani",
-      "Daun Kerdil (Virus)":
-        "serangan virus yang ditularkan serangga kutu kebul atau aphid",
-      "Busuk Akar / Rebah Semai":
-        "jamur tanah pythium sp. atau rhizoctonia sp.",
+      "Daun Kerdil (Virus)": "serangan virus yang ditularkan serangga kutu kebul atau aphid",
+      "Busuk Akar / Rebah Semai": "jamur tanah pythium sp. atau rhizoctonia sp.",
       "Antraknosa / Patek": "jamur colletotrichum capsici",
-      "Virus Kuning atau Gemini":
-        "virus dari kelompok Begomovirus (seperti Pepper Yellow Leaf Curl Virus atau TYLCV)",
+      "Virus Kuning atau Gemini": "virus dari kelompok Begomovirus (seperti Pepper Yellow Leaf Curl Virus atau TYLCV)",
       "Layu Bakteri": "bakteri Ralstonia solanacearum",
     };
     return descriptions[diseaseName] || "penyebab yang belum teridentifikasi";
@@ -271,9 +262,7 @@ export default function ResultPage({
 
   const getSolution = () => {
     if (yesAnswers.length === 0) {
-      return [
-        "Lanjutkan perawatan rutin tanaman Anda dengan penyiraman teratur dan pemupukan sesuai jadwal.",
-      ];
+      return ["Lanjutkan perawatan rutin tanaman Anda dengan penyiraman teratur dan pemupukan sesuai jadwal."];
     }
 
     const diagnosisResult = getDiagnosis();
@@ -292,6 +281,128 @@ export default function ResultPage({
 
   const diagnosisResult = getDiagnosis();
   const solutions = getSolution();
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    
+    // Set font
+    doc.setFont("helvetica");
+    
+    // Header
+    doc.setFillColor(39, 174, 96);
+    doc.rect(0, 0, 210, 40, "F");
+    
+    // Title
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.text("Diagnosa Cabai", 105, 20, { align: "center" });
+    
+    doc.setFontSize(14);
+    doc.text("Hasil Diagnosa Penyakit Tanaman Cabai", 105, 30, { align: "center" });
+    
+    // Date
+    const currentDate = new Date().toLocaleDateString("id-ID", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    doc.setFontSize(10);
+    doc.text(`Tanggal: ${currentDate}`, 105, 50, { align: "center" });
+    
+    // Diagnosis Section
+    doc.setTextColor(44, 62, 80);
+    doc.setFontSize(16);
+    doc.text("Hasil Diagnosis", 20, 70);
+    
+    // Diagnosis box
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.5);
+    doc.rect(20, 75, 170, 30);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(52, 73, 94);
+    const diagnosisLines = doc.splitTextToSize(diagnosisResult.diagnosis, 160);
+    doc.text(diagnosisLines, 25, 83);
+    
+    // Score badge (if applicable)
+    let yPosition = 110;
+    if (diagnosisResult.score > 0) {
+      doc.setFontSize(10);
+      doc.setTextColor(39, 174, 96);
+      doc.text(`✓ ${diagnosisResult.score} gejala cocok`, 25, yPosition);
+      yPosition += 10;
+    }
+    
+    // Solutions Section
+    yPosition += 10;
+    doc.setTextColor(44, 62, 80);
+    doc.setFontSize(16);
+    doc.text("Solusi & Rekomendasi", 20, yPosition);
+    
+    yPosition += 8;
+    doc.setFontSize(11);
+    doc.setTextColor(52, 73, 94);
+    
+    solutions.forEach((solution, index) => {
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      
+      const solutionText = `${index + 1}. ${solution}`;
+      const solutionLines = doc.splitTextToSize(solutionText, 165);
+      doc.text(solutionLines, 25, yPosition);
+      yPosition += solutionLines.length * 6 + 3;
+    });
+    
+    // Symptoms Section (if any)
+    if (yesAnswers.length > 0) {
+      yPosition += 10;
+      
+      if (yPosition > 250) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      
+      doc.setTextColor(44, 62, 80);
+      doc.setFontSize(16);
+      doc.text(`Gejala yang Terdeteksi (${yesAnswers.length})`, 20, yPosition);
+      
+      yPosition += 8;
+      doc.setFontSize(10);
+      doc.setTextColor(52, 73, 94);
+      
+      yesAnswers.forEach((symptom, index) => {
+        if (yPosition > 275) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        
+        const cleanedSymptom = symptom.replace("Apakah ", "").replace("?", "");
+        doc.text(`• ${cleanedSymptom}`, 25, yPosition);
+        yPosition += 6;
+      });
+    }
+    
+    // Footer
+    const pageCount = doc.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text(
+        `Diagnosa Cabai - Halaman ${i} dari ${pageCount}`,
+        105,
+        290,
+        { align: "center" }
+      );
+    }
+    
+    // Save PDF
+    const fileName = `Hasil_Diagnosa_Cabai_${new Date().getTime()}.pdf`;
+    doc.save(fileName);
+  };
 
   const getSeverityIcon = () => {
     switch (diagnosisResult.severity) {
@@ -321,15 +432,10 @@ export default function ResultPage({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
       className="size-full flex flex-col"
-      style={{
-        background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)",
-      }}
+      style={{ background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)" }}
     >
       {/* Header */}
-      <div
-        className="p-4 sm:p-6 text-center shadow-sm"
-        style={{ backgroundColor: "#FFFFFF" }}
-      >
+      <div className="p-4 sm:p-6 text-center shadow-sm" style={{ backgroundColor: "#FFFFFF" }}>
         <h1
           style={{
             fontFamily: "Georgia, serif",
@@ -354,7 +460,9 @@ export default function ResultPage({
           >
             {/* Icon and Title */}
             <div className="flex items-start gap-4 mb-4">
-              <div className="flex-shrink-0 mt-1">{getSeverityIcon()}</div>
+              <div className="flex-shrink-0 mt-1">
+                {getSeverityIcon()}
+              </div>
               <div className="flex-1">
                 <h2
                   className="mb-3"
@@ -500,26 +608,46 @@ export default function ResultPage({
         </div>
       </div>
 
-      {/* Bottom Button */}
+      {/* Bottom Buttons */}
       <div className="p-4 sm:p-6 bg-white shadow-lg">
         <div className="max-w-3xl mx-auto">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onNavigateBack}
-            className="w-full sm:w-auto mx-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl shadow-md transition-all"
-            style={{
-              background: "linear-gradient(135deg, #27AE60 0%, #229954 100%)",
-              color: "#FFFFFF",
-              fontWeight: "600",
-              fontSize: "1.0625rem",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            <Home size={20} />
-            Kembali ke Halaman Utama
-          </motion.button>
+          <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={generatePDF}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl shadow-md transition-all"
+              style={{
+                background: "linear-gradient(135deg, #3498DB 0%, #2980B9 100%)",
+                color: "#FFFFFF",
+                fontWeight: "600",
+                fontSize: "1.0625rem",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              <Download size={20} />
+              Download PDF
+            </motion.button>
+            
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onNavigateBack}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-xl shadow-md transition-all"
+              style={{
+                background: "linear-gradient(135deg, #27AE60 0%, #229954 100%)",
+                color: "#FFFFFF",
+                fontWeight: "600",
+                fontSize: "1.0625rem",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              <Home size={20} />
+              Kembali ke Halaman Utama
+            </motion.button>
+          </div>
         </div>
       </div>
     </motion.div>
