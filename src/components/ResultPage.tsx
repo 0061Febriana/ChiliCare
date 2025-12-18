@@ -1,6 +1,12 @@
 import { motion } from "motion/react";
 import { DiagnosisResults } from "./DiagnosisPage";
-import { Home, AlertTriangle, Info, CheckCircle2, Download } from "lucide-react";
+import {
+  Home,
+  AlertTriangle,
+  Info,
+  CheckCircle2,
+  Download,
+} from "lucide-react";
 import jsPDF from "jspdf";
 
 interface ResultPageProps {
@@ -43,9 +49,6 @@ const diseaseDatabase: Disease[] = [
       "Apakah batang busuk?",
       "Apakah batang layu mendadak?",
       "Apakah tanah terlalu becek?",
-      "Apakah akar membusuk?",
-      "Apakah daun layu walau tanah basah?",
-      "Apakah tanah terlalu lembab?",
       "Apakah tanaman kekurangan kalsium",
       "Apakah buah terlihat layu ?",
       "Apakah intensitas hujan tinggi?",
@@ -169,7 +172,10 @@ const diseaseDatabase: Disease[] = [
   },
 ];
 
-export default function ResultPage({ results, onNavigateBack }: ResultPageProps) {
+export default function ResultPage({
+  results,
+  onNavigateBack,
+}: ResultPageProps) {
   // Get "Yes" answers
   const getYesAnswers = () => {
     return Object.entries(results.answers)
@@ -196,9 +202,10 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
         disease,
         score,
         matchedSymptoms,
-        matchPercentage: disease.symptoms.length > 0
-          ? (score / disease.symptoms.length) * 100
-          : 0,
+        matchPercentage:
+          disease.symptoms.length > 0
+            ? (score / disease.symptoms.length) * 100
+            : 0,
       };
     });
   };
@@ -207,7 +214,8 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
   const getDiagnosis = () => {
     if (yesAnswers.length === 0) {
       return {
-        diagnosis: "Tidak ada gejala yang terdeteksi. Tanaman Anda tampak sehat!",
+        diagnosis:
+          "Tidak ada gejala yang terdeteksi. Tanaman Anda tampak sehat!",
         disease: null,
         score: 0,
         matchedSymptoms: [],
@@ -235,7 +243,9 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
       };
     }
 
-    const diagnosis = `Terdeteksi gejala penyakit ${topDisease.disease.name} yang disebabkan oleh ${getDiseaseDescription(topDisease.disease.name)}.`;
+    const diagnosis = `Terdeteksi gejala penyakit ${
+      topDisease.disease.name
+    } yang disebabkan oleh ${getDiseaseDescription(topDisease.disease.name)}.`;
 
     return {
       diagnosis,
@@ -251,10 +261,13 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
       "Layu Fusarium": "jamur atau bakteri",
       "Busuk Batang": "jamur phytophthora capsici",
       "Bercak Daun": "jamur cercospora capsici atau alternaria solani",
-      "Daun Kerdil (Virus)": "serangan virus yang ditularkan serangga kutu kebul atau aphid",
-      "Busuk Akar / Rebah Semai": "jamur tanah pythium sp. atau rhizoctonia sp.",
+      "Daun Kerdil (Virus)":
+        "serangan virus yang ditularkan serangga kutu kebul atau aphid",
+      "Busuk Akar / Rebah Semai":
+        "jamur tanah pythium sp. atau rhizoctonia sp.",
       "Antraknosa / Patek": "jamur colletotrichum capsici",
-      "Virus Kuning atau Gemini": "virus dari kelompok Begomovirus (seperti Pepper Yellow Leaf Curl Virus atau TYLCV)",
+      "Virus Kuning atau Gemini":
+        "virus dari kelompok Begomovirus (seperti Pepper Yellow Leaf Curl Virus atau TYLCV)",
       "Layu Bakteri": "bakteri Ralstonia solanacearum",
     };
     return descriptions[diseaseName] || "penyebab yang belum teridentifikasi";
@@ -262,7 +275,9 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
 
   const getSolution = () => {
     if (yesAnswers.length === 0) {
-      return ["Lanjutkan perawatan rutin tanaman Anda dengan penyiraman teratur dan pemupukan sesuai jadwal."];
+      return [
+        "Lanjutkan perawatan rutin tanaman Anda dengan penyiraman teratur dan pemupukan sesuai jadwal.",
+      ];
     }
 
     const diagnosisResult = getDiagnosis();
@@ -284,22 +299,24 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
 
   const generatePDF = () => {
     const doc = new jsPDF();
-    
+
     // Set font
     doc.setFont("helvetica");
-    
+
     // Header
     doc.setFillColor(39, 174, 96);
     doc.rect(0, 0, 210, 40, "F");
-    
+
     // Title
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
     doc.text("Diagnosa Cabai", 105, 20, { align: "center" });
-    
+
     doc.setFontSize(14);
-    doc.text("Hasil Diagnosa Penyakit Tanaman Cabai", 105, 30, { align: "center" });
-    
+    doc.text("Hasil Diagnosa Penyakit Tanaman Cabai", 105, 30, {
+      align: "center",
+    });
+
     // Date
     const currentDate = new Date().toLocaleDateString("id-ID", {
       weekday: "long",
@@ -309,22 +326,22 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
     });
     doc.setFontSize(10);
     doc.text(`Tanggal: ${currentDate}`, 105, 50, { align: "center" });
-    
+
     // Diagnosis Section
     doc.setTextColor(44, 62, 80);
     doc.setFontSize(16);
     doc.text("Hasil Diagnosis", 20, 70);
-    
+
     // Diagnosis box
     doc.setDrawColor(200, 200, 200);
     doc.setLineWidth(0.5);
     doc.rect(20, 75, 170, 30);
-    
+
     doc.setFontSize(11);
     doc.setTextColor(52, 73, 94);
     const diagnosisLines = doc.splitTextToSize(diagnosisResult.diagnosis, 160);
     doc.text(diagnosisLines, 25, 83);
-    
+
     // Score badge (if applicable)
     let yPosition = 110;
     if (diagnosisResult.score > 0) {
@@ -333,72 +350,69 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
       doc.text(`✓ ${diagnosisResult.score} gejala cocok`, 25, yPosition);
       yPosition += 10;
     }
-    
+
     // Solutions Section
     yPosition += 10;
     doc.setTextColor(44, 62, 80);
     doc.setFontSize(16);
     doc.text("Solusi & Rekomendasi", 20, yPosition);
-    
+
     yPosition += 8;
     doc.setFontSize(11);
     doc.setTextColor(52, 73, 94);
-    
+
     solutions.forEach((solution, index) => {
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
       }
-      
+
       const solutionText = `${index + 1}. ${solution}`;
       const solutionLines = doc.splitTextToSize(solutionText, 165);
       doc.text(solutionLines, 25, yPosition);
       yPosition += solutionLines.length * 6 + 3;
     });
-    
+
     // Symptoms Section (if any)
     if (yesAnswers.length > 0) {
       yPosition += 10;
-      
+
       if (yPosition > 250) {
         doc.addPage();
         yPosition = 20;
       }
-      
+
       doc.setTextColor(44, 62, 80);
       doc.setFontSize(16);
       doc.text(`Gejala yang Terdeteksi (${yesAnswers.length})`, 20, yPosition);
-      
+
       yPosition += 8;
       doc.setFontSize(10);
       doc.setTextColor(52, 73, 94);
-      
+
       yesAnswers.forEach((symptom, index) => {
         if (yPosition > 275) {
           doc.addPage();
           yPosition = 20;
         }
-        
+
         const cleanedSymptom = symptom.replace("Apakah ", "").replace("?", "");
         doc.text(`• ${cleanedSymptom}`, 25, yPosition);
         yPosition += 6;
       });
     }
-    
+
     // Footer
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       doc.setFontSize(8);
       doc.setTextColor(150, 150, 150);
-      doc.text(
-        `Diagnosa Cabai - Halaman ${i} dari ${pageCount}`,
-        105,
-        290,
-        { align: "center" }
-      );
+      doc.text(`Diagnosa Cabai - Halaman ${i} dari ${pageCount}`, 105, 290, {
+        align: "center",
+      });
     }
-    
+
     // Save PDF
     const fileName = `Hasil_Diagnosa_Cabai_${new Date().getTime()}.pdf`;
     doc.save(fileName);
@@ -432,10 +446,15 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
       className="size-full flex flex-col"
-      style={{ background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)" }}
+      style={{
+        background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)",
+      }}
     >
       {/* Header */}
-      <div className="p-4 sm:p-6 text-center shadow-sm" style={{ backgroundColor: "#FFFFFF" }}>
+      <div
+        className="p-4 sm:p-6 text-center shadow-sm"
+        style={{ backgroundColor: "#FFFFFF" }}
+      >
         <h1
           style={{
             fontFamily: "Georgia, serif",
@@ -460,9 +479,7 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
           >
             {/* Icon and Title */}
             <div className="flex items-start gap-4 mb-4">
-              <div className="flex-shrink-0 mt-1">
-                {getSeverityIcon()}
-              </div>
+              <div className="flex-shrink-0 mt-1">{getSeverityIcon()}</div>
               <div className="flex-1">
                 <h2
                   className="mb-3"
@@ -629,7 +646,7 @@ export default function ResultPage({ results, onNavigateBack }: ResultPageProps)
               <Download size={20} />
               Download PDF
             </motion.button>
-            
+
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

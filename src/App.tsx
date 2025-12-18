@@ -8,8 +8,7 @@ type Page = "splash" | "diagnosis" | "result";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("splash");
-  const [diagnosisResults, setDiagnosisResults] =
-    useState<DiagnosisResults | null>(null);
+  const [diagnosisResults, setDiagnosisResults] = useState<DiagnosisResults | null>(null);
 
   const navigateToSplash = () => setCurrentPage("splash");
   const navigateToDiagnosis = () => setCurrentPage("diagnosis");
@@ -20,17 +19,10 @@ export default function App() {
 
   return (
     <div className="size-full">
-      {currentPage === "splash" && (
-        <SplashScreen onNavigate={navigateToDiagnosis} />
-      )}
-      {currentPage === "diagnosis" && (
-        <DiagnosisPage onNavigateToResult={navigateToResult} />
-      )}
+      {currentPage === "splash" && <SplashScreen onNavigate={navigateToDiagnosis} />}
+      {currentPage === "diagnosis" && <DiagnosisPage onNavigateToResult={navigateToResult} />}
       {currentPage === "result" && diagnosisResults && (
-        <ResultPage
-          results={diagnosisResults}
-          onNavigateBack={navigateToDiagnosis}
-        />
+        <ResultPage results={diagnosisResults} onNavigateBack={navigateToDiagnosis} />
       )}
     </div>
   );

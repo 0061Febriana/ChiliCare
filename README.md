@@ -1,7 +1,7 @@
 
-  # Plant Disease Diagnosis App
+  # Chili Care
 
-  This is a code bundle for Plant Disease Diagnosis App. The original project is available at https://www.figma.com/design/tmq9xxSWVCYRS9AlJ7pd7V/Plant-Disease-Diagnosis-App.
+  This is a code bundle for Chili Care. The original project is available at https://www.figma.com/design/tmq9xxSWVCYRS9AlJ7pd7V/Chili-Care.
 
   ## Running the code
 

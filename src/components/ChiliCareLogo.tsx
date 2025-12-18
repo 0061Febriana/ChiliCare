@@ -17,14 +17,10 @@ export default function ChiliCareLogo() {
 
       {/* Gradient definitions */}
       <defs>
+      
+
         {/* Bright highlight gradient for shiny effect */}
-        <linearGradient
-          id="highlightGradient"
-          x1="0%"
-          y1="0%"
-          x2="100%"
-          y2="100%"
-        >
+        <linearGradient id="highlightGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.85" />
           <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
         </linearGradient>
@@ -43,7 +39,7 @@ export default function ChiliCareLogo() {
       {/* Main curved chili body */}
       <path
         d="M45 25 Q40 30, 38 40 Q36 55, 38 70 Q40 85, 45 95 Q48 100, 52 102 Q56 103, 60 101 Q63 99, 65 95 Q68 88, 70 75 Q71 60, 68 45 Q65 32, 60 26 Q55 22, 50 23 Q47 23.5, 45 25Z"
-        fill="url(#chiliRedGradient)"
+        fill="url(#chiliRedGradient)" 
         opacity="0.98"
       />
       {/* Shadow side */}
