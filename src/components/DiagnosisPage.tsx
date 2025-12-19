@@ -52,7 +52,9 @@ const allSymptoms = [
   "Apakah kualitas bibit rendah?",
 ];
 
-export default function DiagnosisPage({ onNavigateToResult }: DiagnosisPageProps) {
+export default function DiagnosisPage({
+  onNavigateToResult,
+}: DiagnosisPageProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
@@ -103,10 +105,15 @@ export default function DiagnosisPage({ onNavigateToResult }: DiagnosisPageProps
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
       className="size-full flex flex-col"
-      style={{ background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)" }}
+      style={{
+        background: "linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%)",
+      }}
     >
       {/* Header */}
-      <div className="p-4 sm:p-6 text-center shadow-sm" style={{ backgroundColor: "#FFFFFF" }}>
+      <div
+        className="p-4 sm:p-6 text-center shadow-sm"
+        style={{ backgroundColor: "#FFFFFF" }}
+      >
         <h1
           className="mb-2"
           style={{
@@ -130,7 +137,9 @@ export default function DiagnosisPage({ onNavigateToResult }: DiagnosisPageProps
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.3 }}
           className="h-full"
-          style={{ background: "linear-gradient(90deg, #27AE60 0%, #229954 100%)" }}
+          style={{
+            background: "linear-gradient(90deg, #27AE60 0%, #229954 100%)",
+          }}
         />
       </div>
 
@@ -152,7 +161,8 @@ export default function DiagnosisPage({ onNavigateToResult }: DiagnosisPageProps
                 <div
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center"
                   style={{
-                    background: "linear-gradient(135deg, #E74C3C 0%, #C0392B 100%)",
+                    background:
+                      "linear-gradient(135deg, #E74C3C 0%, #C0392B 100%)",
                   }}
                 >
                   <span className="text-3xl sm:text-4xl">🌶️</span>
@@ -185,12 +195,16 @@ export default function DiagnosisPage({ onNavigateToResult }: DiagnosisPageProps
                         ? "linear-gradient(135deg, #27AE60 0%, #229954 100%)"
                         : "#FFFFFF",
                     color: currentAnswer === true ? "#FFFFFF" : "#27AE60",
-                    border: `2px solid ${currentAnswer === true ? "#27AE60" : "#27AE60"}`,
+                    border: `2px solid ${
+                      currentAnswer === true ? "#27AE60" : "#27AE60"
+                    }`,
                     fontWeight: "600",
                     fontSize: "1.125rem",
                   }}
                 >
-                  {currentAnswer === true && <CheckCircle className="inline mr-2" size={20} />}
+                  {currentAnswer === true && (
+                    <CheckCircle className="inline mr-2" size={20} />
+                  )}
                   Ya
                 </motion.button>
 
@@ -205,12 +219,16 @@ export default function DiagnosisPage({ onNavigateToResult }: DiagnosisPageProps
                         ? "linear-gradient(135deg, #E74C3C 0%, #C0392B 100%)"
                         : "#FFFFFF",
                     color: currentAnswer === false ? "#FFFFFF" : "#E74C3C",
-                    border: `2px solid ${currentAnswer === false ? "#E74C3C" : "#E74C3C"}`,
+                    border: `2px solid ${
+                      currentAnswer === false ? "#E74C3C" : "#E74C3C"
+                    }`,
                     fontWeight: "600",
                     fontSize: "1.125rem",
                   }}
                 >
-                  {currentAnswer === false && <CheckCircle className="inline mr-2" size={20} />}
+                  {currentAnswer === false && (
+                    <CheckCircle className="inline mr-2" size={20} />
+                  )}
                   Tidak
                 </motion.button>
               </div>
