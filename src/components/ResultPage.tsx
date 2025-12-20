@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { DiagnosisResult } from "./DiagnosisPage";
+import { DiagnosisResults } from "./DiagnosisPage";
 import {
   Home,
   AlertTriangle,
@@ -10,7 +10,7 @@ import {
 import jsPDF from "jspdf";
 
 interface ResultPageProps {
-  results: DiagnosisResult;
+  results: DiagnosisResults;
   onNavigateBack: () => void;
 }
 
